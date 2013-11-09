@@ -10,6 +10,12 @@ public class FoxBot
 
     public static void main(String[] args)
     {
+        // Get out of static. Static is ugly.
+        new FoxBot().start(args);
+    }
+
+    private void start(String[] args)
+    {
         // Set logger properties
         System.setProperty(SimpleLogger.SHOW_DATE_TIME_KEY, "true");
         System.setProperty(SimpleLogger.DATE_TIME_FORMAT_KEY, "[HH:mm:ss]");
@@ -20,12 +26,6 @@ public class FoxBot
         // Initialise logger
         logger = new SimpleLoggerFactory().getLogger(FoxBot.class.getName());
 
-        // Get out of static. Static is ugly.
-        new FoxBot().start(args);
-    }
-
-    private void start(String[] args)
-    {
         getLogger().info("Test");
     }
 
