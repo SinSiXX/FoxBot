@@ -6,6 +6,8 @@ import org.slf4j.impl.SimpleLoggerFactory;
 
 public class Main extends FoxBot
 {
+    // Get the build version from the manifest.
+    protected static final String VERSION = Main.class.getPackage().getImplementationVersion();
     protected static Logger logger;
 
     public static void main(String[] args)

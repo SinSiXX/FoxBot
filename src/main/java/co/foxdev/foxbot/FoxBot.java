@@ -4,9 +4,6 @@ import org.slf4j.Logger;
 
 public abstract class FoxBot
 {
-    // Get the build version from the manifest.
-    private static final String VERSION = Main.class.getPackage().getImplementationVersion();
-
     /**
      * Gets the version of this bot instance
      *
@@ -14,7 +11,7 @@ public abstract class FoxBot
      */
     public static String getVersion()
     {
-        return VERSION;
+        return Main.VERSION;
     }
 
     /**
