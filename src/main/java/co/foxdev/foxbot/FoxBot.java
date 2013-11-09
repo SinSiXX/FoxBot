@@ -18,7 +18,7 @@ public class FoxBot
         {
             switch (args[0])
             {
-                // Print help dialogue and exit
+                // Print help dialogue and exit.
                 case "-h":
                 case "--help":
                     printHelp();
