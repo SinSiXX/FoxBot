@@ -50,7 +50,7 @@ public class Main extends FoxBot
         // Initialise logger.
         logger = new SimpleLoggerFactory().getLogger(Main.class.getName());
 
-        getLogger().info("Starting Main " + getVersion());
+        getLogger().info("Starting FoxBot " + getVersion());
         getLogger().debug("ahuehuehue");
     }
 
