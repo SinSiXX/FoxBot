@@ -1,222 +1,36 @@
-/*
- * This file is part of Foxbot.
- *
- *     Foxbot is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     Foxbot is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with Foxbot. If not, see <http://www.gnu.org/licenses/>.
- */
-
 package co.foxdev.foxbot;
 
-import co.foxdev.foxbot.logger.BotLogger;
-import co.foxdev.foxbot.utils.PingTask;
-import co.foxdev.foxbot.config.ZncConfig;
-import org.pircbotx.PircBotX;
-import org.pircbotx.UtilSSLSocketFactory;
-import org.pircbotx.exception.IrcException;
-import org.pircbotx.hooks.managers.BackgroundListenerManager;
-import org.reflections.Reflections;
-import co.foxdev.foxbot.commands.Command;
-import co.foxdev.foxbot.config.Config;
-import co.foxdev.foxbot.database.Database;
-import co.foxdev.foxbot.listeners.MessageListener;
-import co.foxdev.foxbot.listeners.UserListener;
-import co.foxdev.foxbot.permissions.PermissionManager;
-import co.foxdev.foxbot.plugin.PluginManager;
-import co.foxdev.foxbot.listeners.spamhandler.SpamHandler;
-import co.foxdev.foxbot.utils.Utils;
+import org.slf4j.Logger;
+import org.slf4j.impl.SimpleLogger;
+import org.slf4j.impl.SimpleLoggerFactory;
 
-import javax.net.ssl.SSLSocketFactory;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-/**
- * FoxBot - An IRC bot written in Java
- *
- * @author TheReverend403 (Lee Watson)
- * @website http://revthefox.co.uk
- * @repo https://github.com/TheReverend403/FoxBot
- */
-
-public class FoxBot extends PircBotX
+public class FoxBot
 {
-    private static Config config;
-    private static PermissionManager permissions;
-    private static ZncConfig zncConfig;
-    private static PluginManager pluginManager;
-    private static Utils utils;
-    private static Database database;
-    private static Reflections reflections = new Reflections("co.foxdev");
-    private static BackgroundListenerManager blm = new BackgroundListenerManager();
+    private static Logger logger;
 
     public static void main(String[] args)
     {
-        FoxBot me = new FoxBot();
-        me.start(args);
+        // Set logger properties
+        System.setProperty(SimpleLogger.SHOW_DATE_TIME_KEY, "true");
+        System.setProperty(SimpleLogger.DATE_TIME_FORMAT_KEY, "[HH:mm:ss]");
+        System.setProperty(SimpleLogger.SHOW_THREAD_NAME_KEY, "false");
+        System.setProperty(SimpleLogger.LEVEL_IN_BRACKETS_KEY, "true");
+        System.setProperty(SimpleLogger.SHOW_LOG_NAME_KEY, "false");
+
+        // Initialise logger
+        logger = new SimpleLoggerFactory().getLogger(FoxBot.class.getName());
+
+        // Get out of static. Static is ugly.
+        new FoxBot().start(args);
     }
 
     private void start(String[] args)
     {
-        File path = new File("data/customcmds/");
-
-        if (!path.exists() && !path.mkdirs())
-        {
-            BotLogger.log(Level.WARNING, "STARTUP: Could not create required folders. Shutting down.");
-            this.disconnect();
-            return;
-        }
-
-        config = new Config(this);
-        zncConfig = new ZncConfig(this);
-        permissions = new PermissionManager(this);
-        pluginManager = new PluginManager(this);
-        utils = new Utils(this);
-        database = new Database(this);
-        database.connect();
-        registerListeners();
-        registerCommands();
-        setBotInfo();
-        connectToServer();
-
-        if (config.isStatusCheckEnabled())
-        {
-            BotLogger.log(Level.INFO, "STARTUP: Scheduling new PingTask");
-            new PingTask(this);
-        }
+        getLogger().info("Test");
     }
 
-    private void setBotInfo()
+    public static Logger getLogger()
     {
-        BotLogger.log(Level.INFO, "STARTUP: Setting bot info");
-        this.setVerbose(config.getDebug());
-        BotLogger.log(Level.INFO, String.format("STARTUP: Set verbose to %s", config.getDebug()));
-        this.setAutoNickChange(config.getAutoNickChange());
-        BotLogger.log(Level.INFO, String.format("STARTUP: Set auto nick change to %s", config.getAutoNickChange()));
-        this.setAutoReconnect(config.getAutoReconnect());
-        BotLogger.log(Level.INFO, String.format("STARTUP: Set auto-reconnect to %s", config.getAutoReconnect()));
-        this.setMessageDelay(config.getMessageDelay());
-        BotLogger.log(Level.INFO, String.format("STARTUP: Set message delay to %s", config.getMessageDelay()));
-        this.setVersion(String.format("FoxBot - A Java IRC bot written by FoxDev and owned by %s - https://github.com/FoxDev/FoxBot - Use %shelp for more info", config.getBotOwner(), config.getCommandPrefix()));
-        BotLogger.log(Level.INFO, String.format("STARTUP: Set version to 'FoxBot - A Java IRC bot written by FoxDev and owned by %s - https://github.com/FoxDev/FoxBot - Use %shelp for more info'", config.getBotOwner(), config.getCommandPrefix()));
-        this.setAutoSplitMessage(true);
-        this.setName(config.getBotNick());
-        BotLogger.log(Level.INFO, String.format("STARTUP: Set nick to '%s'", config.getBotNick()));
-        this.setLogin(config.getBotIdent());
-        BotLogger.log(Level.INFO, String.format("STARTUP: Set ident to '%s'", config.getBotIdent()));
-    }
-
-    private void connectToServer()
-    {
-        try
-        {
-            if (config.getServerSsl())
-            {
-
-                BotLogger.log(Level.INFO, String.format("CONNECT: Trying address %s (SSL)", this.getConfig().getServerAddress()));
-                this.connect(config.getServerAddress(), config.getServerPort(), config.getServerPassword(), config.getAcceptInvalidSsl() ? new UtilSSLSocketFactory().trustAllCertificates().disableDiffieHellman() : SSLSocketFactory.getDefault());
-            }
-            else
-            {
-                BotLogger.log(Level.INFO, String.format("CONNECT: Trying address %s", this.getConfig().getServerAddress()));
-                this.connect(config.getServerAddress(), config.getServerPort(), config.getServerPassword());
-            }
-
-            if (config.useNickserv())
-            {
-                this.identify(config.getNickservPassword());
-            }
-        }
-        catch (IOException | IrcException ex)
-        {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-        }
-
-        BotLogger.log(Level.INFO, String.format("CONNECT: Connected to %s", this.getConfig().getServerAddress()));
-        BotLogger.log(Level.INFO, String.format("STARTUP: Joining channels"));
-        for (String channel : config.getChannels())
-        {
-            this.joinChannel(channel);
-        }
-    }
-
-    private void registerListeners()
-    {
-        BotLogger.log(Level.INFO, String.format("STARTUP: Registering MessageListener"));
-        blm.addListener(new MessageListener(this), true);
-        BotLogger.log(Level.INFO, String.format("STARTUP: Registering UserListener"));
-        blm.addListener(new UserListener(this), true);
-        BotLogger.log(Level.INFO, String.format("STARTUP: Registering SpamHandler"));
-        blm.addListener(new SpamHandler(this), true);
-
-        this.setListenerManager(blm);
-
-        /*
-        this.getListenerManager().addListener(new MessageListener(this));
-        this.getListenerManager().addListener(new UserListener(this));
-        this.getListenerManager().addListener(new SpamHandler(this));
-        */
-    }
-
-    private void registerCommands()
-    {
-        try
-        {
-            for (Class clazz : reflections.getSubTypesOf(Command.class))
-            {
-                ClassLoader.getSystemClassLoader().loadClass(clazz.getName());
-                Constructor clazzConstructor = clazz.getConstructor(this.getClass());
-                Command command = (Command) clazzConstructor.newInstance(this);
-
-                BotLogger.log(Level.INFO, String.format("STARTUP: Registering command '%s'", command.getName()));
-                this.getPluginManager().registerCommand(command);
-            }
-        }
-        catch (Exception ex)
-        {
-            // This can never happen.
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public Config getConfig()
-    {
-        return config;
-    }
-
-    public PermissionManager getPermissionManager()
-    {
-        return permissions;
-    }
-
-    public ZncConfig getZncConfig()
-    {
-        return zncConfig;
-    }
-
-    public PluginManager getPluginManager()
-    {
-        return pluginManager;
-    }
-
-    public Utils getUtils()
-    {
-        return utils;
-    }
-
-    public Database getDatabase()
-    {
-        return database;
+        return logger;
     }
 }
