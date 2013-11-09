@@ -26,29 +26,6 @@ public class Main extends FoxBot
                 case "--version":
                     System.out.println("You are running FoxBot " + getVersion());
                     System.exit(0);
-                default:
-                    break;
-            }
-        }
-
-        // Get out of static. Static is ugly. Also, actually start this thing.
-        new Main().start(args);
-    }
-
-    private void start(String[] args)
-    {
-        // Set logger properties.
-        System.setProperty(SimpleLogger.SHOW_DATE_TIME_KEY, "true");
-        System.setProperty(SimpleLogger.DATE_TIME_FORMAT_KEY, "[HH:mm:ss]");
-        System.setProperty(SimpleLogger.SHOW_THREAD_NAME_KEY, "false");
-        System.setProperty(SimpleLogger.LEVEL_IN_BRACKETS_KEY, "true");
-        System.setProperty(SimpleLogger.SHOW_LOG_NAME_KEY, "false");
-
-        // Parse args.
-        if (args.length == 1)
-        {
-            switch (args[0])
-            {
                 // Set debug in config?
                 case "-d":
                 case "--debug":
@@ -63,6 +40,12 @@ public class Main extends FoxBot
                     break;
             }
         }
+        // Set logger properties.
+        System.setProperty(SimpleLogger.SHOW_DATE_TIME_KEY, "true");
+        System.setProperty(SimpleLogger.DATE_TIME_FORMAT_KEY, "[HH:mm:ss]");
+        System.setProperty(SimpleLogger.SHOW_THREAD_NAME_KEY, "false");
+        System.setProperty(SimpleLogger.LEVEL_IN_BRACKETS_KEY, "true");
+        System.setProperty(SimpleLogger.SHOW_LOG_NAME_KEY, "false");
 
         // Initialise logger.
         logger = new SimpleLoggerFactory().getLogger(Main.class.getName());
