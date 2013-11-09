@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.impl.SimpleLogger;
 import org.slf4j.impl.SimpleLoggerFactory;
 
-public abstract class Main
+public class Main
 {
     // Get the build version from the manifest.
     protected static final String VERSION = Main.class.getPackage().getImplementationVersion();
