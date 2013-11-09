@@ -10,7 +10,11 @@ public class FoxBot
 
     public static void main(String[] args)
     {
-        // Get out of static. Static is ugly.
+        // Show help dialogue and exit
+        if (args.length == 1 && (args[0].equals("-h") || args[0].equals("--help") ))
+            printHelp();
+
+        // Get out of static. Static is ugly. Also, actually start this thing.
         new FoxBot().start(args);
     }
 
@@ -22,11 +26,25 @@ public class FoxBot
         System.setProperty(SimpleLogger.SHOW_THREAD_NAME_KEY, "false");
         System.setProperty(SimpleLogger.LEVEL_IN_BRACKETS_KEY, "true");
         System.setProperty(SimpleLogger.SHOW_LOG_NAME_KEY, "false");
+        // Set debug in config?
+        if (args.length == 1 && (args[0].equals("-d") || args[0].equals("--debug")))
+            System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "debug");
 
         // Initialise logger
         logger = new SimpleLoggerFactory().getLogger(FoxBot.class.getName());
 
         getLogger().info("Test");
+        getLogger().debug("ahuehuehue");
+    }
+
+    private static void printHelp()
+    {
+        System.out.println(
+                "\tUsage" +
+                "\n\t-h - Prints this help" +
+                "\n\t-d - Enables debug"
+        );
+        System.exit(0);
     }
 
     public static Logger getLogger()
