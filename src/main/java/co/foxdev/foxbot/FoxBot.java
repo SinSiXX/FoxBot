@@ -9,7 +9,7 @@ public abstract class FoxBot
      *
      * @return Current bot version
      */
-    public static String getVersion()
+    public String getVersion()
     {
         return Main.VERSION;
     }
@@ -19,7 +19,7 @@ public abstract class FoxBot
      *
      * @return Current bot logger
      */
-    public static Logger getLogger()
+    public Logger getLogger()
     {
         return Main.logger;
     }

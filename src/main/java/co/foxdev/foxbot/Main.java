@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.impl.SimpleLogger;
 import org.slf4j.impl.SimpleLoggerFactory;
 
-public class Main extends FoxBot
+public abstract class Main
 {
     // Get the build version from the manifest.
     protected static final String VERSION = Main.class.getPackage().getImplementationVersion();
@@ -21,10 +21,10 @@ public class Main extends FoxBot
                 case "-h":
                 case "--help":
                     printHelp();
-                // Show version dialogue and exit.
+                // Print version dialogue and exit.
                 case "-v":
                 case "--version":
-                    System.out.println("You are running FoxBot " + getVersion());
+                    System.out.println("You are running FoxBot " + VERSION);
                     System.exit(0);
                 // Set debug in config?
                 case "-d":
@@ -40,6 +40,7 @@ public class Main extends FoxBot
                     break;
             }
         }
+
         // Set logger properties.
         System.setProperty(SimpleLogger.SHOW_DATE_TIME_KEY, "true");
         System.setProperty(SimpleLogger.DATE_TIME_FORMAT_KEY, "[HH:mm:ss]");
@@ -50,8 +51,8 @@ public class Main extends FoxBot
         // Initialise logger.
         logger = new SimpleLoggerFactory().getLogger(Main.class.getName());
 
-        getLogger().info("Starting FoxBot " + getVersion());
-        getLogger().debug("ahuehuehue");
+        // Start the bot
+        new Bot();
     }
 
     // Prints a help dialogue listing all possible startup flags.
