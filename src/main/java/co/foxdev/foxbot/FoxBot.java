@@ -13,14 +13,23 @@ public class FoxBot
 
     public static void main(String[] args)
     {
-        // Show help dialogue and exit.
-        if (args.length == 1 && (args[0].equals("-h") || args[0].equals("--help")))
-            printHelp();
-        // Show version dialogue and exit.
-        if (args.length == 1 && (args[0].equals("-v") || args[0].equals("--version")))
+        // Parse args
+        if (args.length == 1)
         {
-            System.out.println("You are running FoxBot " + getVersion());
-            System.exit(0);
+            switch (args[0])
+            {
+                // Print help dialogue and exit
+                case "-h":
+                case "--help":
+                    printHelp();
+                // Show version dialogue and exit.
+                case "-v":
+                case "--version":
+                    System.out.println("You are running FoxBot " + getVersion());
+                    System.exit(0);
+                default:
+                    break;
+            }
         }
 
         // Get out of static. Static is ugly. Also, actually start this thing.
@@ -35,12 +44,26 @@ public class FoxBot
         System.setProperty(SimpleLogger.SHOW_THREAD_NAME_KEY, "false");
         System.setProperty(SimpleLogger.LEVEL_IN_BRACKETS_KEY, "true");
         System.setProperty(SimpleLogger.SHOW_LOG_NAME_KEY, "false");
-        // Set debug in config?
-        if (args.length == 1 && (args[0].equals("-d") || args[0].equals("--debug")))
-            System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "debug");
-        // Set log level to trace.
-        if (args.length == 1 && (args[0].equals("-t") || args[0].equals("--trace")))
-            System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "trace");
+
+        // Parse args.
+        if (args.length == 1)
+        {
+            switch (args[0])
+            {
+                // Set debug in config?
+                case "-d":
+                case "--debug":
+                    System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "debug");
+                    break;
+                // Sets debug to trace.
+                case "-t":
+                case "--trace":
+                    System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "trace");
+                    break;
+                default:
+                    break;
+            }
+        }
 
         // Initialise logger.
         logger = new SimpleLoggerFactory().getLogger(FoxBot.class.getName());
