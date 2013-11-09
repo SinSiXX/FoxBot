@@ -31,6 +31,8 @@
                     <archive>
                         <manifest>
                             <mainClass>co.foxdev.foxbot.FoxBot</mainClass>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
                     </archive>
                 </configuration>
@@ -62,5 +64,5 @@
             </plugin>
         </plugins>
     </build>
-    
+
 </project>
