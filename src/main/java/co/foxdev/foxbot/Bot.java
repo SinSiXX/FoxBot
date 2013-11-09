@@ -18,9 +18,14 @@
 package co.foxdev.foxbot;
 
 import co.foxdev.foxbot.listeners.MessageListener;
+import org.pircbotx.Configuration;
+import org.pircbotx.PircBotX;
+
 
 public class Bot extends FoxBot
 {
+    private Configuration.Builder<PircBotX> configBuilder;
+
     public Bot()
     {
         this.start();
@@ -30,6 +35,23 @@ public class Bot extends FoxBot
     {
         getLogger().info("Starting FoxBot " + getVersion());
         getLogger().debug("Running from " + this.getClass().getName());
+        // Create a new message listener.
         new MessageListener(this);
+        // Set up the bot.
+        setup();
+        // Start the bot.
+        connect();
+    }
+
+    // Sets the bot up ready for connection.
+    private void setup()
+    {
+        getLogger().warn("Bot setup is not yet implemented!");
+    }
+
+    // Connects the bot to a server.
+    private void connect()
+    {
+        getLogger().warn("Server connection is not yet implemented!");
     }
 }

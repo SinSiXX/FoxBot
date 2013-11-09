@@ -30,13 +30,13 @@ public class MessageListener extends ListenerAdapter
         this.bot = instance;
         bot.getLogger().debug("Instantiated " + this.getClass().getName());
         // Register with the bot's ListenerManager.
-        bot.getInstance().getConfiguration().getListenerManager().addListener(this);
-        bot.getLogger().debug("Registered " + this.getClass().getName() + " as a listener");
+        //bot.getInstance().getConfiguration().getListenerManager().addListener(this);
+        //bot.getLogger().debug("Registered " + this.getClass().getName() + " as a listener");
     }
 
     @Override
     public void onMessage(MessageEvent event)
     {
-        bot.getLogger().debug("Recieved message");
+        bot.getLogger().debug("Received message: " + event.toString());
     }
 }
