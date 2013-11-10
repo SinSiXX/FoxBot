@@ -19,7 +19,6 @@ package co.foxdev.foxbot.irc;
 
 import co.foxdev.foxbot.FoxBot;
 import co.foxdev.foxbot.common.Utils;
-import org.apache.commons.lang3.StringUtils;
 import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
 import org.pircbotx.User;

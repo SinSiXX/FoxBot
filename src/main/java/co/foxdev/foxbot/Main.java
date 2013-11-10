@@ -83,7 +83,7 @@ public class Main
         // Initialise logger.
         logger = new SimpleLoggerFactory().getLogger(Main.class.getName());
 
-        // Start the bot
+        // Hand over initialisation to the bot
         new Bot();
     }
 

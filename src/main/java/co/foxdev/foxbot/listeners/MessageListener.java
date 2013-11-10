@@ -18,7 +18,6 @@
 package co.foxdev.foxbot.listeners;
 
 import co.foxdev.foxbot.Bot;
-import co.foxdev.foxbot.irc.IUser;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
 

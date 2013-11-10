@@ -18,10 +18,8 @@
 package co.foxdev.foxbot.permissions;
 
 import co.foxdev.foxbot.Bot;
-import org.apache.commons.lang3.StringUtils;
 import org.pircbotx.User;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
