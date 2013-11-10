@@ -57,9 +57,9 @@ public abstract class FoxBot
     }
 
     /**
-     * Gets the current bot's logger
+     * Gets the current bot's permissions manager
      *
-     * @return Current bot logger
+     * @return Permissions manager
      */
     public static PermissionManager getPermissionManager()
     {
