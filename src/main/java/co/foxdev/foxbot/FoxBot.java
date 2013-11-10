@@ -47,7 +47,7 @@ public abstract class FoxBot
     }
 
     /**
-     * Gets the current bots logger
+     * Gets the current bot's logger
      *
      * @return Current bot logger
      */
@@ -57,7 +57,7 @@ public abstract class FoxBot
     }
 
     /**
-     * Gets the current bots logger
+     * Gets the current bot's logger
      *
      * @return Current bot logger
      */
