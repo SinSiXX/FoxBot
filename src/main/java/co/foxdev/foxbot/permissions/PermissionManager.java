@@ -22,6 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.pircbotx.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,13 +41,10 @@ public class PermissionManager
     {
         if (authorized)
         {
+            // Add a new list of permissions for the user.
             if (!userPermissions.containsKey(user))
-            {
-                // Add a new list of permissions for the user.
-                userPermissions.put(user, new ArrayList<String>());
-                userPermissions.get(user).add(permission);
-                return;
-            }
+                userPermissions.put(user, Arrays.asList(permission));
+
             // Prevent duplicates.
             if (!userPermissions.get(user).contains(permission))
                 userPermissions.get(user).add(permission);
