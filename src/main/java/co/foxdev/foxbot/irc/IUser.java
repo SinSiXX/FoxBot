@@ -18,6 +18,8 @@
 package co.foxdev.foxbot.irc;
 
 import co.foxdev.foxbot.FoxBot;
+import co.foxdev.foxbot.common.Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
 import org.pircbotx.User;
@@ -50,5 +52,16 @@ public class IUser extends User
     public void setPermission(String permission, boolean authorized)
     {
         FoxBot.getPermissionManager().setPermission(this, permission, authorized);
+    }
+
+    /**
+     * Gets the user's prefix based on their channel mode
+     *
+     * @param channel The channel to get the prefix for
+     * @return User's prefix
+     */
+    public String getPrefix(Channel channel)
+    {
+        return Utils.getPrefix(channel, this);
     }
 }

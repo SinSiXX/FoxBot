@@ -18,6 +18,7 @@
 package co.foxdev.foxbot.permissions;
 
 import co.foxdev.foxbot.Bot;
+import org.apache.commons.lang3.StringUtils;
 import org.pircbotx.User;
 
 import java.util.ArrayList;
@@ -60,9 +61,7 @@ public class PermissionManager
 
             // Remove the user if they have no permissions.
             if (userPermissions.get(user).isEmpty())
-            {
                 userPermissions.remove(user);
-            }
         }
     }
 
@@ -70,7 +69,8 @@ public class PermissionManager
     public boolean hasPermission(User user, String permission)
     {
         boolean result = userPermissions.containsKey(user) && userPermissions.get(user).contains(permission);
+
         bot.getLogger().debug(String.format("Permission check on %s for %s returned %s", permission, user.getNick(), result));
-        return userPermissions.containsKey(user) && userPermissions.get(user).contains(permission);
+        return result;
     }
 }
