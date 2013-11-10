@@ -17,19 +17,21 @@
 
 package co.foxdev.foxbot;
 
+import co.foxdev.foxbot.permissions.PermissionManager;
 import org.pircbotx.PircBotX;
 import org.slf4j.Logger;
 
 public abstract class FoxBot
 {
-    protected PircBotX instance;
+    protected static PircBotX instance;
+    protected static PermissionManager permissionManager;
 
     /**
      * Gets the actual instance of PircBotX that this bot is running
      *
      * @return PircBotX object
      */
-    public PircBotX getInstance()
+    public static PircBotX getInstance()
     {
         return instance;
     }
@@ -39,7 +41,7 @@ public abstract class FoxBot
      *
      * @return Current bot version
      */
-    public String getVersion()
+    public static String getVersion()
     {
         return Main.VERSION;
     }
@@ -49,8 +51,18 @@ public abstract class FoxBot
      *
      * @return Current bot logger
      */
-    public Logger getLogger()
+    public static Logger getLogger()
     {
         return Main.logger;
+    }
+
+    /**
+     * Gets the current bots logger
+     *
+     * @return Current bot logger
+     */
+    public static PermissionManager getPermissionManager()
+    {
+        return permissionManager;
     }
 }

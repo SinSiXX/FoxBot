@@ -18,6 +18,7 @@
 package co.foxdev.foxbot;
 
 import co.foxdev.foxbot.listeners.MessageListener;
+import co.foxdev.foxbot.permissions.PermissionManager;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 
@@ -35,6 +36,8 @@ public class Bot extends FoxBot
     {
         getLogger().info("Starting FoxBot " + getVersion());
         getLogger().debug("Running from " + this.getClass().getName());
+        // Create a new permission manager
+        permissionManager = new PermissionManager(this);
         // Create a new message listener.
         new MessageListener(this);
         // Set up the bot.
