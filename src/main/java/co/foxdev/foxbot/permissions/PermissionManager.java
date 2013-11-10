@@ -31,6 +31,7 @@ public class PermissionManager
 
     public PermissionManager(Bot instance)
     {
+        this.bot = instance;
         bot.getLogger().debug("Instantiated " + this.getClass().getName());
     }
 
