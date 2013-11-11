@@ -43,23 +43,23 @@ public class Bot extends FoxBot
         // Create a new message listener.
         new MessageListener(this);
 
-        // Set up the bot.
+        // Set up the bots.
         // for (config.getBots())
         //{
-        setup(/*host, port, ssl, invalidSslCert*/);
+        setupBots(/*host, port, ssl, invalidSslCert*/);
         //}
-        // Start the bot.
+        // Start the bots.
         connect();
     }
 
-    // Sets the bot up ready for connection.
-    private void setup(/*String host, int port, boolean ssl, boolean invalidSslCert*/)
+    // Set the bots up ready for connection.
+    private void setupBots(/*String host, int port, boolean ssl, boolean invalidSslCert*/)
     {
         getLogger().warn("Bot setup is not yet implemented!");
         // botManager.addBot(finishedConfig);
     }
 
-    // Connects the bot to a server.
+    // Connect the bots to their servers.
     private void connect()
     {
         getLogger().warn("Server connection is not yet implemented!");
