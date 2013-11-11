@@ -8,10 +8,10 @@ IRC bot written in Java
   
      Much features.
 
-               so advanced
+                     so advanced
                
          such pircbotx 2.0
       
            wow
             
-       much fox
+                               much fox
