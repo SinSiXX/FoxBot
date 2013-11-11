@@ -31,6 +31,7 @@ public class Bot extends FoxBot
 
     public Bot()
     {
+        getLogger().debug("Instantiated " + this.getClass().getName());
         this.start();
     }
 

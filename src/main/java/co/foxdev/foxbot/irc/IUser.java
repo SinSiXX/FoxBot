@@ -57,10 +57,21 @@ public class IUser extends User
      * Gets the user's prefix based on their channel mode
      *
      * @param channel The channel to get the prefix for
-     * @return User's prefix
+     * @return user's prefix
      */
     public String getPrefix(Channel channel)
     {
         return Utils.getPrefix(channel, this);
+    }
+
+     /**
+     * Gets the user's permissions
+     *
+     * @param user The user to get the permissions for
+     * @return user's permissions
+     */
+    public List<String> getPermissions()
+    {
+        return FoxBot.getPermissionManager().getPermissions(this);
     }
 }

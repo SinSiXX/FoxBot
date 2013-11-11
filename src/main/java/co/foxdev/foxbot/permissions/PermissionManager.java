@@ -69,4 +69,10 @@ public class PermissionManager
         bot.getLogger().debug(String.format("Permission check on %s for %s returned %s", permission, user.getNick(), result));
         return result;
     }
+
+    // Gets a list of all applicable permissions.
+    public List<String> getPermissions(User user)
+    {
+        return userPermissions.get(user);
+    }
 }

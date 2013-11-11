@@ -66,7 +66,7 @@ public class Main
         System.setProperty(SimpleLogger.LEVEL_IN_BRACKETS_KEY, "true");
         System.setProperty(SimpleLogger.SHOW_LOG_NAME_KEY, "false");
 
-        // Set logging level
+        // Set logging level.
         switch (debugLevel)
         {
             case 1:
@@ -79,11 +79,10 @@ public class Main
                 break;
         }
 
-
         // Initialise logger.
         logger = new SimpleLoggerFactory().getLogger(Main.class.getName());
 
-        // Hand over initialisation to the bot
+        // Hand over initialisation to the bot.
         new Bot();
     }
 
