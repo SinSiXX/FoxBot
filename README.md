@@ -12,6 +12,6 @@ IRC bot written in Java
                
       such pircbotx 2.0
       
-            wow
+           wow
             
-    much fox
+       much fox
