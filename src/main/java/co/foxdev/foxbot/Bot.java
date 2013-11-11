@@ -20,11 +20,13 @@ package co.foxdev.foxbot;
 import co.foxdev.foxbot.listeners.MessageListener;
 import co.foxdev.foxbot.permissions.PermissionManager;
 import org.pircbotx.Configuration;
+import org.pircbotx.MultiBotManager;
 import org.pircbotx.PircBotX;
 
 
 public class Bot extends FoxBot
 {
+    MultiBotManager botManager = new MultiBotManager();
     private Configuration.Builder<PircBotX> configBuilder;
 
     public Bot()
@@ -40,21 +42,27 @@ public class Bot extends FoxBot
         permissionManager = new PermissionManager(this);
         // Create a new message listener.
         new MessageListener(this);
+
         // Set up the bot.
-        setup();
+        // for (config.getBots())
+        //{
+        setup(/*host, port, ssl, invalidSslCert*/);
+        //}
         // Start the bot.
         connect();
     }
 
     // Sets the bot up ready for connection.
-    private void setup()
+    private void setup(/*String host, int port, boolean ssl, boolean invalidSslCert*/)
     {
         getLogger().warn("Bot setup is not yet implemented!");
+        // botManager.addBot(finishedConfig);
     }
 
     // Connects the bot to a server.
     private void connect()
     {
         getLogger().warn("Server connection is not yet implemented!");
+        // botManager.start();
     }
 }
