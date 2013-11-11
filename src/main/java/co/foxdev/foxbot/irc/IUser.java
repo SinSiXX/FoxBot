@@ -24,6 +24,8 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.User;
 import org.pircbotx.UserChannelDao;
 
+import java.util.List;
+
 public class IUser extends User
 {
     protected IUser(PircBotX bot, UserChannelDao<? extends User, ? extends Channel> dao, String nick)
@@ -67,7 +69,6 @@ public class IUser extends User
      /**
      * Gets the user's permissions
      *
-     * @param user The user to get the permissions for
      * @return user's permissions
      */
     public List<String> getPermissions()
