@@ -19,7 +19,12 @@ package co.foxdev.foxbot.permissions;
 
 import co.foxdev.foxbot.Bot;
 import org.pircbotx.User;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.Writer;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +37,7 @@ public class PermissionManager
     public PermissionManager(Bot instance)
     {
         this.bot = instance;
-        bot.getLogger().debug("Instantiated " + this.getClass().getName());
+        Bot.getLogger().debug("Instantiated " + this.getClass().getName());
     }
 
     public void setPermission(User user, String permission, boolean authorized)
