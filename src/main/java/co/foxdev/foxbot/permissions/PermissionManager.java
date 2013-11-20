@@ -15,16 +15,28 @@
  *     along with FoxBot.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*
+ * This file is part of FoxBot.
+ *
+ *     FoxBot is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     FoxBot is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with FoxBot.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package co.foxdev.foxbot.permissions;
 
 import co.foxdev.foxbot.Bot;
 import org.pircbotx.User;
-import org.yaml.snakeyaml.Yaml;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +83,7 @@ public class PermissionManager
     {
         boolean result = userPermissions.containsKey(user) && userPermissions.get(user).contains(permission);
 
-        bot.getLogger().debug(String.format("Permission check on %s for %s returned %s", permission, user.getNick(), result));
+        Bot.getLogger().debug(String.format("Permission check on %s for %s returned %s", permission, user.getNick(), result));
         return result;
     }
 
