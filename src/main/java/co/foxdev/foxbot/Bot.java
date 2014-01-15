@@ -20,16 +20,15 @@ package co.foxdev.foxbot;
 import co.foxdev.foxbot.listeners.MessageListener;
 import co.foxdev.foxbot.permissions.PermissionManager;
 
-
 public class Bot extends FoxBot
 {
+
     public Bot()
     {
         getLogger().debug("Instantiated " + this.getClass().getName());
-        this.start();
     }
 
-    protected void start()
+    public void start()
     {
         getLogger().info("Starting FoxBot " + getVersion());
         getLogger().debug("Running from " + this.getClass().getName());

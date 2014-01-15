@@ -17,47 +17,94 @@
 
 package co.foxdev.foxbot;
 
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
 import org.slf4j.Logger;
 import org.slf4j.impl.SimpleLogger;
 import org.slf4j.impl.SimpleLoggerFactory;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main
 {
     // Get the build version from the manifest.
     protected static final String VERSION = Main.class.getPackage().getImplementationVersion();
     protected static Logger logger;
-    private static int debugLevel = 0;
+    private static boolean debug = false;
+	private static Bot bot;
 
     public static void main(String[] args)
     {
-        // Parse args
-        if (args.length == 1)
-        {
-            switch (args[0])
-            {
-                // Print help dialogue and exit.
-                case "-h":
-                case "--help":
-                    printHelp();
-                // Print version dialogue and exit.
-                case "-v":
-                case "--version":
-                    System.out.println("You are running FoxBot " + VERSION);
-                    System.exit(0);
-                // Set debug in config? If so, this should override config.
-                case "-d":
-                case "--debug":
-                    debugLevel = 1;
-                    break;
-                // Sets debug to trace.
-                case "-t":
-                case "--trace":
-                    debugLevel = 2;
-                    break;
-                default:
-                    break;
-            }
-        }
+	    OptionParser parser = new OptionParser() {
+		    {
+			    acceptsAll(asList("h", "help"), "Prints help dialogue");
+			    acceptsAll(asList("d", "debug"), "Enables finer logging");
+
+			    acceptsAll(asList("s", "server"), "Server hostname")
+			    .withRequiredArg()
+			    .ofType(String.class)
+			    .describedAs("host");
+
+			    acceptsAll(asList("p", "port"), "Server port. Use + for SSL.")
+			    .withRequiredArg()
+			    .ofType(String.class)
+			    .defaultsTo("6667")
+			    .describedAs("[+]port");
+
+			    acceptsAll(asList("n", "nick"), "Bot nick")
+			    .withRequiredArg()
+			    .ofType(String.class)
+			    .defaultsTo("FoxBot")
+			    .describedAs("nick");
+
+			    acceptsAll(asList("i", "ident"), "Bot ident")
+			    .withRequiredArg()
+			    .ofType(String.class)
+			    .defaultsTo("bot")
+			    .describedAs("ident");
+
+			    acceptsAll(asList("r", "realname"), "Bot realname")
+			    .withRequiredArg()
+			    .ofType(String.class)
+			    .defaultsTo("FoxBot")
+			    .describedAs("realname");
+		    }
+	    };
+
+	    OptionSet options = null;
+
+	    try
+	    {
+		    options = parser.parse(args);
+	    }
+	    catch (joptsimple.OptionException ex)
+	    {
+		    logger.error("Error parsing args!" , ex);
+	    }
+
+	    if (options == null || options.has("h"))
+	    {
+		    try
+		    {
+			    parser.printHelpOn(System.out);
+		    }
+		    catch (IOException ex)
+		    {
+			    logger.error("Error parsing args!" , ex);
+		    }
+		    return;
+	    }
+
+	    if (options.has("s"))
+	    {
+	    }
+
+	    if (options.has("d"))
+	    {
+		    debug = true;
+	    }
 
         // Set logger properties.
         System.setProperty(SimpleLogger.SHOW_DATE_TIME_KEY, "true");
@@ -66,36 +113,24 @@ public class Main
         System.setProperty(SimpleLogger.LEVEL_IN_BRACKETS_KEY, "true");
         System.setProperty(SimpleLogger.SHOW_LOG_NAME_KEY, "false");
 
-        // Set logging level.
-        switch (debugLevel)
+        if (debug)
         {
-            case 1:
-                System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "debug");
-                break;
-            case 2:
-                System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "trace");
-                break;
-            default:
-                break;
+            System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "debug");
         }
 
         // Initialise logger.
         logger = new SimpleLoggerFactory().getLogger(Main.class.getName());
 
-        // Hand over initialisation to the bot.
-        new Bot();
+        bot = new Bot();
+	    // Set config from startup args if available
+	    // bot.getConfig().set...
+	    // Hand over initialisation to the bot.
+	    bot.start();
     }
 
-    // Prints a help dialogue listing all possible startup flags.
-    private static void printHelp()
-    {
-        System.out.println(
-                "Usage" +
-                "\n-h Prints this help" +
-                "\n-v Prints the bot version" +
-                "\n-d Enables debug" +
-                "\n-t Sets the log level to trace"
-        );
-        System.exit(0);
-    }
+	// Thanks Bukkit
+	private static List<String> asList(String... params)
+	{
+		return Arrays.asList(params);
+	}
 }
