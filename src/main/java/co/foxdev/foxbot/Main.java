@@ -81,7 +81,7 @@ public class Main
 	    }
 	    catch (joptsimple.OptionException ex)
 	    {
-		    logger.error("Error parsing args!" , ex);
+		    ex.printStackTrace();
 	    }
 
 	    if (options == null || options.has("h"))
@@ -92,7 +92,7 @@ public class Main
 		    }
 		    catch (IOException ex)
 		    {
-			    logger.error("Error parsing args!" , ex);
+			    ex.printStackTrace();
 		    }
 		    return;
 	    }
