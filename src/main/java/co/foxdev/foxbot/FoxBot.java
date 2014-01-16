@@ -41,7 +41,6 @@ public class FoxBot extends PircBotX
     private void start()
     {
         getLogger().info("Starting FoxBot " + getVersion());
-        getLogger().debug("Running from " + this.getClass().getName());
         // Create a new permission manager
         permissionManager = new PermissionManager(this);
         // Create a new message listener.
