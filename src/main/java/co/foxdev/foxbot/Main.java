@@ -119,7 +119,7 @@ public class Main
         // Initialise logger.
         logger = new SimpleLoggerFactory().getLogger(Main.class.getName());
 	    // Start bot
-	    new FoxBot(null).start();
+	    new FoxBot(null);
     }
 
 	// Thanks Bukkit

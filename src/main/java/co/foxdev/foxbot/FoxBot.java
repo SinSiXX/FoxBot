@@ -35,9 +35,10 @@ public class FoxBot extends PircBotX
 	    super(configuration);
 	    instance = this;
         getLogger().debug("Instantiated " + this.getClass().getName());
+	    start();
     }
 
-    public void start()
+    private void start()
     {
         getLogger().info("Starting FoxBot " + getVersion());
         getLogger().debug("Running from " + this.getClass().getName());
