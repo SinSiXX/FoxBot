@@ -80,7 +80,6 @@ public class Main
 	    }
 	    catch (OptionException ex)
 	    {
-		    ex.printStackTrace();
 	    }
 
 	    if (options == null || options.has("h"))
