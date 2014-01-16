@@ -66,7 +66,7 @@ public class FoxBot extends PircBotX
 	}
 
 	/**
-	 * Gets the bot logger
+	 * Gets the bot's logger
 	 *
 	 * @return Bot logger
 	 */

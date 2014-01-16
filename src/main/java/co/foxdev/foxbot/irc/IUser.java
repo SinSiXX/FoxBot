@@ -28,7 +28,7 @@ import java.util.List;
 
 public class IUser extends User
 {
-    protected IUser(FoxBot bot, UserChannelDao<? extends User, ? extends Channel> dao, String nick)
+    protected IUser(PircBotX bot, UserChannelDao<? extends User, ? extends Channel> dao, String nick)
     {
         super(bot, dao, nick);
     }

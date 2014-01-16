@@ -17,8 +17,7 @@
 
 package co.foxdev.foxbot;
 
-import joptsimple.OptionParser;
-import joptsimple.OptionSet;
+import joptsimple.*;
 import org.slf4j.Logger;
 import org.slf4j.impl.SimpleLogger;
 import org.slf4j.impl.SimpleLoggerFactory;
@@ -79,7 +78,7 @@ public class Main
 	    {
 		    options = parser.parse(args);
 	    }
-	    catch (joptsimple.OptionException ex)
+	    catch (OptionException ex)
 	    {
 		    ex.printStackTrace();
 	    }
