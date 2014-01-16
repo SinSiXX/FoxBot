@@ -23,12 +23,25 @@ import org.pircbotx.User;
 
 public class Utils
 {
-	// Get a user's prefix based on channel mode.
+	/**
+	 * Gets a user's IRC prefix based on channel mode
+	 *
+	 * @param channel The channel used to check the user mode
+	 * @param user The user to get the prefix for
+	 * @return user's prefix
+	 */
 	public static String getPrefix(String channel, User user)
 	{
 		return getPrefix(FoxBot.getInstance().getUserChannelDao().getChannel(channel.startsWith("#") ? channel : "#" + channel), user);
 	}
 
+	/**
+	 * Gets a user's IRC prefix based on channel mode
+	 *
+	 * @param channel The channel used to check the user mode
+	 * @param user The user to get the prefix for
+	 * @return user's prefix
+	 */
     public static String getPrefix(Channel channel, User user)
     {
         if (channel.isOwner(user))
