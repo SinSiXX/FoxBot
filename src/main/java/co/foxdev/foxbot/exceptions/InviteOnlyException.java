@@ -5,7 +5,7 @@ public class InviteOnlyException extends Exception
 	/** Thrown when attempting to join an invite only channel */
 	public InviteOnlyException()
 	{
-		super();
+		super("Channel is invite only!");
 	}
 
 	public InviteOnlyException(String message)

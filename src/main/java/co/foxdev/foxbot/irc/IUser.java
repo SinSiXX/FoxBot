@@ -17,6 +17,7 @@
 
 package co.foxdev.foxbot.irc;
 
+import co.foxdev.foxbot.FoxBot;
 import co.foxdev.foxbot.common.Utils;
 import org.pircbotx.Channel;
 import org.pircbotx.PircBotX;
@@ -27,7 +28,7 @@ import java.util.List;
 
 public class IUser extends User
 {
-    protected IUser(PircBotX bot, UserChannelDao<? extends User, ? extends Channel> dao, String nick)
+    protected IUser(FoxBot bot, UserChannelDao<? extends User, ? extends Channel> dao, String nick)
     {
         super(bot, dao, nick);
     }
@@ -40,7 +41,7 @@ public class IUser extends User
      */
     public boolean hasPermission(String permission)
     {
-        return FoxBot.getPermissionManager().hasPermission(this, permission);
+        return ((FoxBot) bot).getPermissionManager().hasPermission(this, permission);
     }
 
     /**
@@ -51,7 +52,7 @@ public class IUser extends User
      */
     public void setPermission(String permission, boolean authorized)
     {
-        FoxBot.getPermissionManager().setPermission(this, permission, authorized);
+	    ((FoxBot) bot).getPermissionManager().setPermission(this, permission, authorized);
     }
 
     /**
@@ -72,6 +73,6 @@ public class IUser extends User
      */
     public List<String> getPermissions()
     {
-        return FoxBot.getPermissionManager().getPermissions(this);
+        return ((FoxBot) bot).getPermissionManager().getPermissions(this);
     }
 }
