@@ -17,52 +17,81 @@
 
 package co.foxdev.foxbot;
 
+import co.foxdev.foxbot.listeners.MessageListener;
 import co.foxdev.foxbot.permissions.PermissionManager;
+import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.slf4j.Logger;
 
-public abstract class FoxBot
+import java.awt.*;
+
+public class FoxBot extends PircBotX
 {
-    protected static PircBotX instance;
-    protected static PermissionManager permissionManager;
+	private static PermissionManager permissionManager;
+	private static FoxBot instance;
 
-    /**
-     * Gets the actual instance of PircBotX that this bot is running
-     *
-     * @return PircBotX object
-     */
-    public static PircBotX getInstance()
+    public FoxBot(Configuration<? extends PircBotX> configuration)
     {
-        return instance;
+	    super(configuration);
+	    instance = this;
+        getLogger().debug("Instantiated " + this.getClass().getName());
     }
 
-    /**
-     * Gets the version of this bot instance
-     *
-     * @return Current bot version
-     */
-    public static String getVersion()
+    public void start()
     {
-        return Main.VERSION;
+        getLogger().info("Starting FoxBot " + getVersion());
+        getLogger().debug("Running from " + this.getClass().getName());
+        // Create a new permission manager
+        permissionManager = new PermissionManager(this);
+        // Create a new message listener.
+        new MessageListener(this);
+
+        _connect();
     }
 
-    /**
-     * Gets the current bot's logger
-     *
-     * @return Current bot logger
-     */
-    public static Logger getLogger()
+    // Connect the bot
+    private void _connect()
     {
-        return Main.logger;
+        getLogger().warn("Server connection is not yet implemented!");
     }
 
-    /**
-     * Gets the current bot's permissions manager
-     *
-     * @return Permissions manager
-     */
-    public static PermissionManager getPermissionManager()
-    {
-        return permissionManager;
-    }
+	/**
+	 * Gets the version of this bot instance
+	 *
+	 * @return Current bot version
+	 */
+	public String getVersion()
+	{
+		return Main.VERSION;
+	}
+
+	/**
+	 * Gets the bot's logger
+	 *
+	 * @return Bot logger
+	 */
+	public Logger getLogger()
+	{
+		return Main.logger;
+	}
+
+	/**
+	 * Gets the bot's permissions manager
+	 *
+	 * @return Permissions manager
+	 */
+	public PermissionManager getPermissionManager()
+	{
+		return permissionManager;
+	}
+
+	/**
+	 * Gets the bot
+	 *
+	 * @return bot
+	 */
+	public static FoxBot getInstance()
+	{
+		return instance;
+	}
 }

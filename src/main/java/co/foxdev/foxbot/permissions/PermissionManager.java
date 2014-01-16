@@ -17,7 +17,7 @@
 
 package co.foxdev.foxbot.permissions;
 
-import co.foxdev.foxbot.Bot;
+import co.foxdev.foxbot.FoxBot;
 import org.pircbotx.User;
 
 import java.util.Arrays;
@@ -26,13 +26,13 @@ import java.util.List;
 
 public class PermissionManager
 {
-    private Bot bot;
+    private FoxBot foxBot;
     private HashMap<User, List<String>> userPermissions = new HashMap<>();
 
-    public PermissionManager(Bot instance)
+    public PermissionManager(FoxBot instance)
     {
-        this.bot = instance;
-        Bot.getLogger().debug("Instantiated " + this.getClass().getName());
+        this.foxBot = instance;
+        FoxBot.getLogger().debug("Instantiated " + this.getClass().getName());
     }
 
     public void setPermission(User user, String permission, boolean authorized)
@@ -66,7 +66,7 @@ public class PermissionManager
     {
         boolean result = userPermissions.containsKey(user) && userPermissions.get(user).contains(permission);
 
-        Bot.getLogger().debug(String.format("Permission check on %s for %s returned %s", permission, user.getNick(), result));
+        FoxBot.getLogger().debug(String.format("Permission check on %s for %s returned %s", permission, user.getNick(), result));
         return result;
     }
 

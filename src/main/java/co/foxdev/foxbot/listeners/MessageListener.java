@@ -17,26 +17,27 @@
 
 package co.foxdev.foxbot.listeners;
 
-import co.foxdev.foxbot.Bot;
+import co.foxdev.foxbot.FoxBot;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
 
-public class MessageListener extends ListenerAdapter
+public class MessageListener extends ListenerAdapter<FoxBot>
 {
-    private final Bot bot;
+    private final FoxBot foxbot;
 
-    public MessageListener(Bot instance)
+    public MessageListener(FoxBot instance)
     {
-        this.bot = instance;
-        Bot.getLogger().debug("Instantiated " + this.getClass().getName());
-        // Register with the bot's ListenerManager.
-        //Bot.getInstance().getConfiguration().getListenerManager().addListener(this);
-        //Bot.getLogger().debug("Registered " + this.getClass().getName() + " as a listener");
+        this.foxbot = instance;
+
+        foxbot.getLogger().debug("Instantiated " + this.getClass().getName());
+        // Register with the foxBot's ListenerManager.
+	    foxbot.getConfiguration().getListenerManager().addListener(this);
+	    foxbot.getLogger().debug("Registered " + this.getClass().getName() + " as a listener");
     }
 
     @Override
-    public void onMessage(MessageEvent event)
+    public void onMessage(MessageEvent<FoxBot> event)
     {
-        Bot.getLogger().debug("Received message: " + event.toString());
+	    foxbot.getLogger().debug("Received message: " + event.toString());
     }
 }

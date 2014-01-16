@@ -33,7 +33,7 @@ public class Main
     protected static final String VERSION = Main.class.getPackage().getImplementationVersion();
     protected static Logger logger;
     private static boolean debug = false;
-	private static Bot bot;
+	private static FoxBot foxBot;
 
     public static void main(String[] args)
     {
@@ -120,12 +120,8 @@ public class Main
 
         // Initialise logger.
         logger = new SimpleLoggerFactory().getLogger(Main.class.getName());
-
-        bot = new Bot();
-	    // Set config from startup args if available
-	    // bot.getConfig().set...
-	    // Hand over initialisation to the bot.
-	    bot.start();
+	    // Start bot
+	    new FoxBot(null).start();
     }
 
 	// Thanks Bukkit
