@@ -26,7 +26,7 @@ public class Utils
 	// Get a user's prefix based on channel mode.
 	public static String getPrefix(String channel, User user)
 	{
-		return getPrefix(FoxBot.getInstance().getUserChannelDao().getChannel(channel), user);
+		return getPrefix(FoxBot.getInstance().getUserChannelDao().getChannel(channel.startsWith("#") ? channel : "#" + channel), user);
 	}
 
     public static String getPrefix(Channel channel, User user)

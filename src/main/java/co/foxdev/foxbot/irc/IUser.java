@@ -66,6 +66,17 @@ public class IUser extends User
         return Utils.getPrefix(channel, this);
     }
 
+	/**
+	 * Gets the user's prefix based on their channel mode
+	 *
+	 * @param channel The channel to get the prefix for
+	 * @return user's prefix
+	 */
+	public String getPrefix(String channel)
+	{
+		return Utils.getPrefix(channel, this);
+	}
+
      /**
      * Gets the user's permissions
      *

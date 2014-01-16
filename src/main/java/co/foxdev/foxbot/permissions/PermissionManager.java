@@ -26,15 +26,34 @@ import java.util.List;
 
 public class PermissionManager
 {
-    private FoxBot foxBot;
+    private FoxBot foxbot;
     private HashMap<User, List<String>> userPermissions = new HashMap<>();
 
     public PermissionManager(FoxBot instance)
     {
-        this.foxBot = instance;
-        FoxBot.getLogger().debug("Instantiated " + this.getClass().getName());
+        this.foxbot = instance;
+        foxbot.getLogger().debug("Instantiated " + this.getClass().getName());
     }
 
+	/**
+	 * Sets a user's access to a permission
+	 *
+	 * @param user The user to set the permission for
+	 * @param permission The permission to set
+	 * @param authorized State of the permission. True to set, false to unset.
+	 */
+	public void setPermission(String user, String permission, boolean authorized)
+	{
+		setPermission(foxbot.getUserChannelDao().getUser(user), permission, authorized);
+	}
+
+	/**
+	 * Sets a user's access to a permission
+	 *
+	 * @param user The user to set the permission for
+	 * @param permission The permission to set
+	 * @param authorized State of the permission. True to set, false to unset.
+	 */
     public void setPermission(User user, String permission, boolean authorized)
     {
         if (authorized)
@@ -61,16 +80,50 @@ public class PermissionManager
         }
     }
 
-    // Checks whether or not a user has access to a permission.
+	/**
+	 * Checks whether a user has access to a permission
+	 *
+	 * @param user The user to check permission for
+	 * @param permission The permission to check for
+	 * @return whether the user has the permission
+	 */
+	public boolean hasPermission(String user, String permission)
+	{
+		return hasPermission(foxbot.getUserChannelDao().getUser(user), permission);
+	}
+
+	/**
+	 * Checks whether a user has access to a permission
+	 *
+	 * @param user The user to check permission for
+	 * @param permission The permission to check for
+	 * @return whether the user has the permission
+	 */
     public boolean hasPermission(User user, String permission)
     {
         boolean result = userPermissions.containsKey(user) && userPermissions.get(user).contains(permission);
 
-        FoxBot.getLogger().debug(String.format("Permission check on %s for %s returned %s", permission, user.getNick(), result));
+        foxbot.getLogger().debug(String.format("Permission check on %s for %s returned %s", permission, user.getNick(), result));
         return result;
     }
 
-    // Gets a list of all applicable permissions.
+	/**
+	 * Gets a list of permissions a user has
+	 *
+	 * @param user The user to get permissions for
+	 * @return list of permissions
+	 */
+	public List<String> getPermissions(String user)
+	{
+		return getPermissions(foxbot.getUserChannelDao().getUser(user));
+	}
+
+	/**
+	 * Gets a list of permissions a user has
+	 *
+	 * @param user The user to get permissions for
+	 * @return list of permissions
+	 */
     public List<String> getPermissions(User user)
     {
         return userPermissions.get(user);
