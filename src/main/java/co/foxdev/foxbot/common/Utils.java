@@ -17,12 +17,18 @@
 
 package co.foxdev.foxbot.common;
 
+import co.foxdev.foxbot.FoxBot;
 import org.pircbotx.Channel;
 import org.pircbotx.User;
 
 public class Utils
 {
-    // Get a user's prefix based on channel mode.
+	// Get a user's prefix based on channel mode.
+	public static String getPrefix(String channel, User user)
+	{
+		return getPrefix(FoxBot.getInstance().getUserChannelDao().getChannel(channel), user);
+	}
+
     public static String getPrefix(Channel channel, User user)
     {
         if (channel.isOwner(user))
