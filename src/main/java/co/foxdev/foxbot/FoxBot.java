@@ -17,13 +17,12 @@
 
 package co.foxdev.foxbot;
 
+import co.foxdev.foxbot.config.Config;
 import co.foxdev.foxbot.listeners.MessageListener;
 import co.foxdev.foxbot.permissions.PermissionManager;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.slf4j.Logger;
-
-import java.awt.*;
 
 public class FoxBot extends PircBotX
 {
@@ -72,7 +71,7 @@ public class FoxBot extends PircBotX
 	 */
 	public Logger getLogger()
 	{
-		return Main.logger;
+		return Main.getLogger();
 	}
 
 	/**
@@ -83,6 +82,16 @@ public class FoxBot extends PircBotX
 	public PermissionManager getPermissionManager()
 	{
 		return permissionManager;
+	}
+
+	/**
+	 * Gets the bot configuration
+	 *
+	 * @return bot config
+	 */
+	public Config getConfig()
+	{
+		return Main.botConfig;
 	}
 
 	/**

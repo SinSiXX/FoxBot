@@ -17,6 +17,7 @@
 
 package co.foxdev.foxbot;
 
+import co.foxdev.foxbot.config.Config;
 import joptsimple.*;
 import org.slf4j.Logger;
 import org.slf4j.impl.SimpleLogger;
@@ -33,6 +34,7 @@ public class Main
     protected static Logger logger;
     private static boolean debug = false;
 	private static FoxBot foxBot;
+	protected static Config botConfig;
 
     public static void main(String[] args)
     {
@@ -118,9 +120,16 @@ public class Main
 
         // Initialise logger.
         logger = new SimpleLoggerFactory().getLogger(Main.class.getName());
+	    // Create config
+	    botConfig = new Config();
 	    // Start bot
 	    new FoxBot(null);
     }
+
+	public static Logger getLogger()
+	{
+		return logger;
+	}
 
 	// Thanks Bukkit
 	private static List<String> asList(String... params)
