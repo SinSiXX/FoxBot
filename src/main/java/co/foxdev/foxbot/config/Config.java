@@ -12,7 +12,6 @@ public class Config
 	@Setter(AccessLevel.NONE)
 	private YamlConfig config;
 
-	@Setter(AccessLevel.NONE)
 	private String botNick;
 
 	public Config()
@@ -35,7 +34,7 @@ public class Config
 		}
 	}
 
-	public void setBotNick(String nick)
+	public void setAndUpdateBotNick(String nick)
 	{
 		if (!botNick.equals(nick))
 		{
