@@ -12,6 +12,7 @@ public class Config
 	@Setter(AccessLevel.NONE)
 	private YamlConfig config;
 
+	@Setter(AccessLevel.NONE)
 	private String botNick;
 
 	public Config()
