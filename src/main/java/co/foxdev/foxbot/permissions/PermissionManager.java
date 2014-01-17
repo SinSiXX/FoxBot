@@ -29,9 +29,9 @@ public class PermissionManager
     private FoxBot foxbot;
     private HashMap<User, List<String>> userPermissions = new HashMap<>();
 
-    public PermissionManager(FoxBot instance)
+    public PermissionManager(FoxBot foxbot)
     {
-        this.foxbot = instance;
+        this.foxbot = foxbot;
         foxbot.getLogger().debug("Instantiated " + this.getClass().getName());
     }
 

@@ -27,12 +27,12 @@ import org.slf4j.Logger;
 public class FoxBot extends PircBotX
 {
 	private static PermissionManager permissionManager;
-	private static FoxBot instance;
+	private static FoxBot foxbot;
 
     public FoxBot(Configuration<? extends PircBotX> configuration)
     {
 	    super(configuration);
-	    instance = this;
+	    foxbot = this;
         getLogger().debug("Instantiated " + this.getClass().getName());
 	    start();
     }
@@ -101,6 +101,6 @@ public class FoxBot extends PircBotX
 	 */
 	public static FoxBot getInstance()
 	{
-		return instance;
+		return foxbot;
 	}
 }

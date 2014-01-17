@@ -18,6 +18,7 @@
 package co.foxdev.foxbot.listeners;
 
 import co.foxdev.foxbot.FoxBot;
+import co.foxdev.foxbot.commands.Command;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.MessageEvent;
 
@@ -25,9 +26,9 @@ public class MessageListener extends ListenerAdapter<FoxBot>
 {
     private final FoxBot foxbot;
 
-    public MessageListener(FoxBot instance)
+    public MessageListener(FoxBot foxbot)
     {
-        this.foxbot = instance;
+        this.foxbot = foxbot;
 
         foxbot.getLogger().debug("Instantiated " + this.getClass().getName());
         // Register with the foxBot's ListenerManager.

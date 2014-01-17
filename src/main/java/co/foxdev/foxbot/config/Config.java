@@ -3,12 +3,16 @@ package co.foxdev.foxbot.config;
 import co.foxdev.foxbot.FoxBot;
 import co.foxdev.foxbot.Main;
 import com.notoriousdev.yamlconfig.YamlConfig;
+import lombok.*;
 
-import java.io.File;
-
+@Data
 public class Config
 {
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
 	private YamlConfig config;
+
+	private String botNick;
 
 	public Config()
 	{
@@ -27,6 +31,15 @@ public class Config
 			// Bot class isn't initialised yet
 			Main.getLogger().warn("Config not found. Creating a new one.");
 			config.saveDefaultConfig();
+		}
+	}
+
+	public void setBotNick(String nick)
+	{
+		if (!botNick.equals(nick))
+		{
+			botNick = nick;
+			FoxBot.getInstance().sendIRC().changeNick(nick);
 		}
 	}
 }
