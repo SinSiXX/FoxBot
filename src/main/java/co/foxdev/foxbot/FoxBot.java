@@ -18,10 +18,10 @@
 package co.foxdev.foxbot;
 
 import co.foxdev.foxbot.config.Config;
+import co.foxdev.foxbot.exceptions.InviteOnlyException;
 import co.foxdev.foxbot.listeners.MessageListener;
 import co.foxdev.foxbot.permissions.PermissionManager;
-import org.pircbotx.Configuration;
-import org.pircbotx.PircBotX;
+import org.pircbotx.*;
 import org.slf4j.Logger;
 
 public class FoxBot extends PircBotX
@@ -92,6 +92,90 @@ public class FoxBot extends PircBotX
 	public Config getConfig()
 	{
 		return Main.botConfig;
+	}
+
+	/**
+	 * Attempts to join a specified channel
+	 *
+	 * @param channel The channel to join
+	 * @throws InviteOnlyException
+	 */
+	public void join(String channel) throws InviteOnlyException
+	{
+		join(getUserChannelDao().getChannel(channel));
+	}
+
+	/**
+	 * Attempts to join a specified channel
+	 *
+	 * @param channel The channel to join
+	 * @throws InviteOnlyException
+	 */
+	public void join(Channel channel) throws InviteOnlyException
+	{
+		if (channel.isInviteOnly())
+		{
+			throw new InviteOnlyException(channel.getName() + " is invite only!");
+		}
+		getLogger().info("Joining " + channel);
+		sendIRC().joinChannel(channel.getName());
+	}
+
+	/**
+	 * Leaves a channel
+	 *
+	 * @param channel channel to leave
+	 */
+	public void part(Channel channel)
+	{
+		part(channel.getName());
+	}
+
+	/**
+	 * Leaves a channel
+	 *
+	 * @param channel channel to leave
+	 */
+	public void part(String channel)
+	{
+		if (getUserBot().getChannels().contains(getUserChannelDao().getChannel(channel)))
+		{
+			getLogger().info("Parting " + channel);
+			sendRaw().rawLineNow("PART " + channel);
+		}
+	}
+
+	/**
+	 * Rapidly leaves and then joins a channel
+	 *
+	 * @param channel channel to cycle
+	 */
+	public void cycle(Channel channel)
+	{
+		cycle(channel.getName());
+	}
+
+	/**
+	 * Rapidly leaves and then joins a channel
+	 *
+	 * @param channel channel to cycle
+	 */
+	public void cycle(String channel)
+	{
+		if (getUserBot().getChannels().contains(getUserChannelDao().getChannel(channel)))
+		{
+			getLogger().info("Attempting to cycle " + channel);
+			part(channel);
+
+			try
+			{
+				join(channel);
+			}
+			catch (InviteOnlyException ex)
+			{
+				getLogger().warn(channel + " is invite only, cannot rejoin!");
+			}
+		}
 	}
 
 	/**
