@@ -121,15 +121,7 @@ public class FoxBot extends PircBotX
 		sendIRC().joinChannel(channel.getName());
 	}
 
-	/**
-	 * Leaves a channel
-	 *
-	 * @param channel channel to leave
-	 */
-	public void part(Channel channel)
-	{
-		part(channel.getName());
-	}
+	// Reimplemented so I have control over logging.
 
 	/**
 	 * Leaves a channel
@@ -138,10 +130,20 @@ public class FoxBot extends PircBotX
 	 */
 	public void part(String channel)
 	{
-		if (getUserBot().getChannels().contains(getUserChannelDao().getChannel(channel)))
+		part(getUserChannelDao().getChannel(channel));
+	}
+
+	/**
+	 * Leaves a channel
+	 *
+	 * @param channel channel to leave
+	 */
+	public void part(Channel channel)
+	{
+		if (getUserBot().getChannels().contains(channel))
 		{
-			getLogger().info("Parting " + channel);
-			sendRaw().rawLineNow("PART " + channel);
+			getLogger().info("Parting " + channel.getName());
+			sendRaw().rawLineNow("PART " + channel.getName());
 		}
 	}
 
